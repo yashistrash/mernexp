@@ -7,16 +7,49 @@ function RegisterForm() {
   const [price, setPrice] = useState(0);
   const [supplierName, setSupplierName] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
+  const [products, setProducts] = useState([]);
+  const [editIndex, setEditIndex] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
+    const newProduct = {
       productName,
       quantity,
       price,
       supplierName,
       expiryDate,
-    });
+    };
+
+    if (editIndex !== null) {
+      const updatedProducts = products.map((product, index) =>
+        index === editIndex ? newProduct : product
+      );
+      setProducts(updatedProducts);
+      setEditIndex(null);
+    } else {
+      setProducts([...products, newProduct]);
+    }
+
+    setProductName("");
+    setQuantity(0);
+    setPrice(0);
+    setSupplierName("");
+    setExpiryDate("");
+  };
+
+  const handleEdit = (index) => {
+    const product = products[index];
+    setProductName(product.productName);
+    setQuantity(product.quantity);
+    setPrice(product.price);
+    setSupplierName(product.supplierName);
+    setExpiryDate(product.expiryDate);
+    setEditIndex(index);
+  };
+
+  const handleDelete = (index) => {
+    const updatedProducts = products.filter((_, i) => i !== index);
+    setProducts(updatedProducts);
   };
 
   return (
@@ -62,10 +95,47 @@ function RegisterForm() {
             type="submit"
             className="border-blue-500 sm:border-double border-4 border-gray-600 bg-white p-2 rounded"
           >
-            Submit
+            {editIndex !== null ? "Update" : "Submit"}
           </button>
         </div>
       </form>
+
+      <div className="mt-4">
+        <h2 className="text-xl font-bold">Product List</h2>
+        <ul>
+          {products.map((product, index) => (
+            <li key={index} className="border p-2 mb-2">
+              <div>
+                <strong>Product Name:</strong> {product.productName}
+              </div>
+              <div>
+                <strong>Quantity:</strong> {product.quantity}
+              </div>
+              <div>
+                <strong>Price:</strong> {product.price}
+              </div>
+              <div>
+                <strong>Supplier Name:</strong> {product.supplierName}
+              </div>
+              <div>
+                <strong>Expiry Date:</strong> {product.expiryDate}
+              </div>
+              <button
+                onClick={() => handleEdit(index)}
+                className="bg-yellow-500 p-1 rounded mr-2"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(index)}
+                className="bg-red-500 p-1 rounded"
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
