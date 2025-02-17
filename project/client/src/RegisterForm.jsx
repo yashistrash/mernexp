@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './style.css';
+import "./style.css";
 
 function GroceryStoreItemForm() {
   const [itemName, setItemName] = useState("");
@@ -14,6 +14,11 @@ function GroceryStoreItemForm() {
     setItemName("");
     setPrice("");
     setQuantity("");
+  };
+
+  const handleDelete = (index) => {
+    const newItems = items.filter((_, i) => i !== index);
+    setItems(newItems);
   };
 
   return (
@@ -53,6 +58,7 @@ function GroceryStoreItemForm() {
               <th>Item Name</th>
               <th>Price</th>
               <th>Quantity</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -61,6 +67,9 @@ function GroceryStoreItemForm() {
                 <td>{item.itemName}</td>
                 <td>{item.price}</td>
                 <td>{item.quantity}</td>
+                <td>
+                  <button onClick={() => handleDelete(index)}>Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>
