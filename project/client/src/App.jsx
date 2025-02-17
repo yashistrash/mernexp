@@ -8,7 +8,7 @@ function App() {
 const [message,setMessage] = useState('')
 useEffect(()=>{
 //Fetch ApI
-axios.get("http://localhost:9000/")
+axios.get("http://localhost:8000/")
 .then(response => {
 setMessage(response.data)
 })
@@ -18,7 +18,7 @@ setMessage(error.message)
 },[])
 return (
 <>
-<h1 className='text-blue-500'>grocery store app</h1>
+<h1 className='text-blue-500'>Grocery Store App</h1>
 <RegisterForm/>
 </>
 )
