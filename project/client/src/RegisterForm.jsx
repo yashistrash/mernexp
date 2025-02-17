@@ -1,143 +1,73 @@
 import React, { useState } from "react";
-import './index.css';
+import './style.css';
 
-function RegisterForm() {
-  const [productName, setProductName] = useState("");
-  const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [supplierName, setSupplierName] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [products, setProducts] = useState([]);
-  const [editIndex, setEditIndex] = useState(null);
+function GroceryStoreItemForm() {
+  const [itemName, setItemName] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [items, setItems] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newProduct = {
-      productName,
-      quantity,
-      price,
-      supplierName,
-      expiryDate,
-    };
-
-    if (editIndex !== null) {
-      const updatedProducts = products.map((product, index) =>
-        index === editIndex ? newProduct : product
-      );
-      setProducts(updatedProducts);
-      setEditIndex(null);
-    } else {
-      setProducts([...products, newProduct]);
-    }
-
-    setProductName("");
-    setQuantity(0);
-    setPrice(0);
-    setSupplierName("");
-    setExpiryDate("");
-  };
-
-  const handleEdit = (index) => {
-    const product = products[index];
-    setProductName(product.productName);
-    setQuantity(product.quantity);
-    setPrice(product.price);
-    setSupplierName(product.supplierName);
-    setExpiryDate(product.expiryDate);
-    setEditIndex(index);
-  };
-
-  const handleDelete = (index) => {
-    const updatedProducts = products.filter((_, i) => i !== index);
-    setProducts(updatedProducts);
+    const newItem = { itemName, price, quantity };
+    setItems([...items, newItem]);
+    setItemName("");
+    setPrice("");
+    setQuantity("");
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="bg-blue-500 bg-opacity-75 p-4 rounded">
-          <label>Product Name</label>
+        <h3>Add Grocery Item</h3>
+        <div>
+          <label>Item Name</label>
           <input
-            type="text"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            className="border-solid border-4 border-gray-600 w-full mb-2"
-          />
-          <label>Quantity</label>
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            className="border-solid border-4 border-gray-600 w-full mb-2"
-          />
+            onChange={(e) => setItemName(e.target.value)}
+            value={itemName}
+          ></input>
+        </div>
+        <div>
           <label>Price</label>
           <input
-            type="number"
-            value={price}
             onChange={(e) => setPrice(e.target.value)}
-            className="border-solid border-4 border-gray-600 w-full mb-2"
-          />
-          <label>Supplier Name</label>
+            value={price}
+          ></input>
+        </div>
+        <div>
+          <label>Quantity</label>
           <input
-            type="text"
-            value={supplierName}
-            onChange={(e) => setSupplierName(e.target.value)}
-            className="border-solid border-4 border-gray-600 w-full mb-2"
-          />
-          <label>Expiry Date</label>
-          <input
-            type="date"
-            value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
-            className="border-solid border-4 border-gray-600 w-full mb-2"
-          />
-          <button
-            type="submit"
-            className="border-blue-500 sm:border-double border-4 border-gray-600 bg-white p-2 rounded"
-          >
-            {editIndex !== null ? "Update" : "Submit"}
-          </button>
+            onChange={(e) => setQuantity(e.target.value)}
+            value={quantity}
+          ></input>
+        </div>
+        <div>
+          <button type="submit">Add Item</button>
         </div>
       </form>
-
-      <div className="mt-4">
-        <h2 className="text-xl font-bold">Product List</h2>
-        <ul>
-          {products.map((product, index) => (
-            <li key={index} className="border p-2 mb-2">
-              <div>
-                <strong>Product Name:</strong> {product.productName}
-              </div>
-              <div>
-                <strong>Quantity:</strong> {product.quantity}
-              </div>
-              <div>
-                <strong>Price:</strong> {product.price}
-              </div>
-              <div>
-                <strong>Supplier Name:</strong> {product.supplierName}
-              </div>
-              <div>
-                <strong>Expiry Date:</strong> {product.expiryDate}
-              </div>
-              <button
-                onClick={() => handleEdit(index)}
-                className="bg-yellow-500 p-1 rounded mr-2"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(index)}
-                className="bg-red-500 p-1 rounded"
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
+      <div>
+        <h3>Grocery Store Items</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item, index) => (
+              <tr key={index}>
+                <td>{item.itemName}</td>
+                <td>{item.price}</td>
+                <td>{item.quantity}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 }
 
-export default RegisterForm;
+export default GroceryStoreItemForm;
