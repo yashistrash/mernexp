@@ -42,12 +42,33 @@ function GroceryStoreItemForm() {
         <div>
           <label>Quantity</label>
           <input
+<<<<<<< Updated upstream
             onChange={(e) => setQuantity(e.target.value)}
             value={quantity}
           ></input>
         </div>
         <div>
           <button type="submit">Add Item</button>
+=======
+            type="text"
+            value={supplierName}
+            onChange={(e) => setSupplierName(e.target.value)}
+            className="border-solid border-4 border-gray-600 w-full mb-2"
+          />
+          <label>Expiry Date</label>
+          <input
+            type="date"
+            value={expiryDate}
+            onChange={(e) => setExpiryDate(e.target.value)}
+            className="border-solid border-4 border-gray-600 w-full mb-2"
+          />
+          <button
+            type="submit"
+            className="border-blue-500 sm:border-double border-4 bg-white p-2 rounded"
+          >
+            {editIndex !== null ? "Update" : "Submit"}
+          </button>
+>>>>>>> Stashed changes
         </div>
       </form>
       <div>

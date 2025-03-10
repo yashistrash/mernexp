@@ -16,7 +16,7 @@ app.post('/register',(req,res)=>{
     })
 //Create API End Points (HTTP Request,Response)
 app.get('/',(req,res)=>{
-res.send('URK22CS2045')
+res.send('URK22CS2033')
 })
 //config PORT and Start Server
 const PORT = 8000
