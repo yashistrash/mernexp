@@ -1,103 +1,48 @@
-import React, { useState } from "react";
-import "./style.css";
+import axios from 'axios';
+import React, { useState } from 'react';
+import './style.css';
 
-function GroceryStoreItemForm() {
-  const [itemName, setItemName] = useState("");
-  const [price, setPrice] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [items, setItems] = useState([]);
+function RegisterForm() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [location, setLocation] = useState('');
+    const [status, setStatus] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newItem = { itemName, price, quantity };
-    setItems([...items, newItem]);
-    setItemName("");
-    setPrice("");
-    setQuantity("");
-  };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:8000/register', { name, email, phone, location })
+            .then(result => setStatus(result.data))
+            .catch(err => setStatus(err.message));
+    };
 
-  const handleDelete = (index) => {
-    const newItems = items.filter((_, i) => i !== index);
-    setItems(newItems);
-  };
-
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h3>Add Grocery Item</h3>
+    return (
         <div>
-          <label>Item Name</label>
-          <input
-            onChange={(e) => setItemName(e.target.value)}
-            value={itemName}
-          ></input>
+            <form onSubmit={handleSubmit}>
+                <h3>Registration Form</h3>
+                <div>
+                    <label>Name</label>
+                    <input onChange={(e) => setName(e.target.value)} />
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div>
+                    <label>Phone</label>
+                    <input onChange={(e) => setPhone(e.target.value)} />
+                </div>
+                <div>
+                    <label>Location</label>
+                    <input onChange={(e) => setLocation(e.target.value)} />
+                </div>
+                <div>
+                    <button type="submit">Sign Up</button>
+                </div>
+                <div style={{ color: 'black' }}>{status}</div>
+            </form>
         </div>
-        <div>
-          <label>Price</label>
-          <input
-            onChange={(e) => setPrice(e.target.value)}
-            value={price}
-          ></input>
-        </div>
-        <div>
-          <label>Quantity</label>
-          <input
-<<<<<<< Updated upstream
-            onChange={(e) => setQuantity(e.target.value)}
-            value={quantity}
-          ></input>
-        </div>
-        <div>
-          <button type="submit">Add Item</button>
-=======
-            type="text"
-            value={supplierName}
-            onChange={(e) => setSupplierName(e.target.value)}
-            className="border-solid border-4 border-gray-600 w-full mb-2"
-          />
-          <label>Expiry Date</label>
-          <input
-            type="date"
-            value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
-            className="border-solid border-4 border-gray-600 w-full mb-2"
-          />
-          <button
-            type="submit"
-            className="border-blue-500 sm:border-double border-4 bg-white p-2 rounded"
-          >
-            {editIndex !== null ? "Update" : "Submit"}
-          </button>
->>>>>>> Stashed changes
-        </div>
-      </form>
-      <div>
-        <h3>Grocery Store Items</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Item Name</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, index) => (
-              <tr key={index}>
-                <td>{item.itemName}</td>
-                <td>{item.price}</td>
-                <td>{item.quantity}</td>
-                <td>
-                  <button onClick={() => handleDelete(index)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+    );
 }
 
-export default GroceryStoreItemForm;
+export default RegisterForm;

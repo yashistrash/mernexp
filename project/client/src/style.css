@@ -33,6 +33,7 @@ input {
   box-sizing: border-box;
   border: 1px solid #ced4da;
   border-radius: 4px;
+  color: black; /* Added rule to change text color to black */
 }
 
 button {
